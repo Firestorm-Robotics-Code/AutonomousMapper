@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+
+<html lang="en">
+    <body>
+        <meta charset="utf-8">
+        <title>Autonomous Mapper</title> 
+    </body>
+    <head>
+        <h1>Autonomous Mapper</h1>
+        <h2>Options</h2>
+        <button id="place-high-cube" value="Place high cube">Place High Cube</button>
+        <button id="auto-ramp" value="Auto ramp">Auto ramp</button>
+        <button id="taxi-out-short" value="Taxi out short side">Taxi out short side</button>
+        <button id="taxi-out-long" value="Taxi out long side">Taxi out long side</button>
+        <p></p>
+        <button id="reset" value="Clear">Clear all</button>
+        <h2>Instructions</h2>
+        <ol id="total-list"></ol>
+        <p></p>
+        <button id="apply">Apply</button>
+        
+        
+        <script>
+            var current = "";
+            
+            function removeAll() {
+                document.getElementById("total-list").innerHTML = "";
+            }
+
+            function removeItem(item) {
+                document.getElementById("total-list").removeChild(item);
+            }
+
+            function addToList(itemId) {
+                var li = document.createElement('LI');
+                var input = document.getElementById(itemId);
+                li.innerHTML = input.value + "  ";      // give it space between the button
+                document.getElementById("total-list").appendChild(li);
+                var delButton = document.createElement('BUTTON');
+                var add = document.createTextNode("Delete");
+                delButton.appendChild(add);
+                delButton.onclick = () => { removeItem(li) };
+
+                li.appendChild(delButton);
+
+                current = input.value + ",";
+            }
+
+            function uploadAll() {
+                // add to this
+            }
+
+            document.getElementById("place-high-cube").onclick = () => { addToList("place-high-cube") };
+            document.getElementById("auto-ramp").onclick = () => { addToList("auto-ramp") };
+            document.getElementById("taxi-out-short").onclick = () => { addToList("taxi-out-short") };
+            document.getElementById("taxi-out-long").onclick = () => { addToList("taxi-out-long") };
+            document.getElementById("reset").onclick = () => { removeAll() };
+
+            document.getElementById("apply").onclick = () => { uploadAll() }
+        </script>
+
+        <noscript>
+            alert("WARNING WARNING!!! THIS WILL NOT WORK!!! GO FIND YOURSELF A REAL WEB BROWSER!!!");
+        </noscript>
+    </head>
+</html>
