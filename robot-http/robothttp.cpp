@@ -290,7 +290,7 @@ inline bool ends_with(std::string const & value, std::string const & ending) // 
     return std::equal(ending.rbegin(), ending.rend(), value.rbegin());
 }
 
-const std::string staticDir = "test/static/";
+const std::string staticDir = "static/";
 
 void onRequest(Request* req){
 	std::string staticPath = staticDir + req -> url;
