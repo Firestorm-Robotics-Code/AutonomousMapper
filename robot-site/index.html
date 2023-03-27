@@ -50,10 +50,31 @@
                 current = input.value + ",";
             }
 
+            function setPresetRamp() {
+                removeAll();
+
+                addToList("place-high-cube");
+                addToList("auto-ramp");
+            }
+
+            function setPresetPlaceTaxiShort() {
+                removeAll();
+
+                addToList("place-high-cube");
+                addToList("taxi-out-short");
+            }
+
+            function setPresetPlaceTaxiLong() {
+                removeAll();
+
+                addToList("place-high-cube");
+                addToList("taxi-out-long");
+            }
+
             function uploadAll() {
                 fetch("/api/postRobotCommands", {
                     method: 'POST',
-                    body: 'Hello world'
+                    body: current
                 });
                 alert("Autonomous successfully uploaded!")
             }
@@ -62,6 +83,10 @@
             document.getElementById("auto-ramp").onclick = () => { addToList("auto-ramp") };
             document.getElementById("taxi-out-short").onclick = () => { addToList("taxi-out-short") };
             document.getElementById("taxi-out-long").onclick = () => { addToList("taxi-out-long") };
+            document.getElementById("preset-place-ramp").onclick = () => { setPresetRamp() };
+            document.getElementById("preset-place-taxi-short").onclick = () => { setPresetPlaceTaxiShort() };
+            document.getElementById("preset-place-taxi-long").onclick = () => { setPresetPlaceTaxiLong() };
+            var test
             document.getElementById("reset").onclick = () => { removeAll() };
 
             document.getElementById("apply").onclick = () => { uploadAll() };

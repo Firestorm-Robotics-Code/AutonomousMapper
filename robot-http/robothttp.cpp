@@ -293,6 +293,7 @@ inline bool ends_with(std::string const & value, std::string const & ending) // 
 const std::string staticDir = "../robot-site/";
 
 void onRequest(Request* req){
+	std::cout << req -> url << std::endl;
     if (req -> url == "/api/postRobotCommands"){
         std::cout << "Got a new set of robot commands: " << req -> body << std::endl;
         req -> response -> status = "418 I'm A Teapot";
