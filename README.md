@@ -1,3 +1,4 @@
-This is the robot HTTP code. The website, maintained by lukewhite32, is in the other directory.
+# Autonomous Mapper
+A firestorm robotics project.
 
-static/ is for testing.
+This is an http server + ui for mapping autonomous.
