@@ -7,11 +7,15 @@
     </body>
     <head>
         <h1>Autonomous Mapper</h1>
+        <h2>Presets</h2>
+        <button id="preset-place-ramp">Place high and ramp</button>
+        <button id="preset-place-taxi-short">Place high and taxi short</button>
+        <button id="preset-place-taxi-long">Place high and taxi long</button>
         <h2>Options</h2>
         <button id="place-high-cube" value="Place high cube">Place High Cube</button>
         <button id="auto-ramp" value="Auto ramp">Auto ramp</button>
-        <button id="taxi-out-short" value="Taxi out short side">Taxi out short side</button>
-        <button id="taxi-out-long" value="Taxi out long side">Taxi out long side</button>
+        <button id="taxi-out-short" value="Taxi out short side">Taxi out on short side</button>
+        <button id="taxi-out-long" value="Taxi out long side">Taxi out on long side</button>
         <p></p>
         <button id="reset" value="Clear">Clear all</button>
         <h2>Instructions</h2>
@@ -47,7 +51,11 @@
             }
 
             function uploadAll() {
-                // add to this
+                fetch("/api/postRobotCommand", {
+                    method: 'POST',
+                    body: 'Hello world'
+                });
+                alert("Autonomous successfully uploaded!")
             }
 
             document.getElementById("place-high-cube").onclick = () => { addToList("place-high-cube") };
@@ -56,11 +64,7 @@
             document.getElementById("taxi-out-long").onclick = () => { addToList("taxi-out-long") };
             document.getElementById("reset").onclick = () => { removeAll() };
 
-            document.getElementById("apply").onclick = () => { uploadAll() }
+            document.getElementById("apply").onclick = () => { uploadAll() };
         </script>
-
-        <noscript>
-            alert("WARNING WARNING!!! THIS WILL NOT WORK!!! GO FIND YOURSELF A REAL WEB BROWSER!!!");
-        </noscript>
     </head>
 </html>
