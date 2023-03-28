@@ -44,6 +44,13 @@ std::vector <std::string> splitString(std::string str, char del = ' '){
 }
 
 
+size_t countUntil(std::string str, char thing){
+    size_t ret = 0;
+    for (; (ret < str.size()) && (str[ret] != thing); ret ++);
+    return ret;
+}
+
+
 std::string trim(std::string toTrim){
 	bool retEarly = true;
 	for (char c : toTrim){
@@ -70,8 +77,8 @@ struct Header {
 
 class Response {
 	int fd;
-	bool sent = false;
 public:
+	bool sent = false;
 	bool close = false;
 	std::string status = "200 OK";
 	std::string contentType = "text/plain";
@@ -129,7 +136,7 @@ public:
 	std::string method;
 	std::string body;
 	bool lineMode = true;
-	bool done = false;
+    bool done = false;
 	std::vector <Header> headers;
 	enum State {
 		HTTP,
@@ -146,15 +153,20 @@ public:
 	State state = HTTP;
 
 	void line(std::string l){
+        if (done){
+            return;
+        }
 		if (state == HTTP){
 			std::vector <std::string> header = splitString(l);
 			if (header.size() < 3){
 				response -> fail("400 Bad Request");
+                done = true;
 			}
 			method = header[0];
 			url = header[1];
 			if (trim(header[2]) != "HTTP/1.1"){
 				response -> fail("400 Bad Request");
+                done = true;
 			}
 			state = State::HEADER;
 		}
@@ -167,11 +179,17 @@ public:
 				}
 			}
 			else {
-				std::vector <std::string> thing = splitString(l, ':');
-				for (size_t i = 0; i < thing[0].size(); i ++){
-					thing[0][i] = std::tolower(thing[0][i]);
+                size_t nameLen = countUntil(l, ':');
+				std::string name = l.substr(0, nameLen);
+                std::string value = l.substr(nameLen + 1, l.size() - 1);
+                if (value.size() == 0){ // the entire string was the header name - e.g., the count never stopped because it didn't reach a valid :.
+                    response -> fail("400 Bad Request");
+                    done = true;
+                }
+				for (size_t i = 0; i < name.size(); i ++){
+					name[i] = std::tolower(name[i]);
 				}
-				Header h = { trim(thing[0]), trim(thing[1]) };
+				Header h = { trim(name), trim(value) };
 				if (h.name == "content-length"){
 					contentLength = std::stoi(h.value);
 				}
@@ -187,29 +205,35 @@ public:
 	}
 	
 	void byte(char byte){
+		body += byte;
 		if (body.size() >= contentLength){
 			done = true;
 		}
-		body += byte;
 	}
 };
 
 
 struct Client {
 	Request* req;
-	int fd;
-	std::string inbuf; // Line buffer. Passed to the stored request at every CRLF.
-	void start(){
+	
+    int fd;
+	
+    std::string inbuf; // Line buffer. Passed to the stored request at every CRLF.
+	
+    void start(){
 		req = new Request;
 		req -> response = new Response(fd);
 	}
+
 	void finish(){
 		delete req;
 		start();
 	}
+
 	Client (int sock){
 		fd = sock;
 	}
+
 	bool dead;
 };
 
@@ -253,16 +277,18 @@ public:
 			Client& client = clients[i];
 			char buffer [BUFFER_SIZE];
 			memset(buffer, 0, BUFFER_SIZE);
-			if (recv(client.fd, buffer, BUFFER_SIZE, 0) == 0){
+            size_t recvSize = recv(client.fd, buffer, BUFFER_SIZE, 0);
+            if (recvSize == -1){
+                continue;
+            }
+			if (recvSize == 0){
 				std::cout << "Dropped client." << std::endl;
 				clients.erase(clients.begin() + i);
 				i --;
 				continue;
 			}
-			for (char c : buffer) {
-				if (c == 0){
-					continue;
-				}
+			for (size_t j = 0; j < recvSize; j ++) {
+                char c = buffer[j];
 				if (client.req -> lineMode){
 					if (c == '\n'){
 						client.req -> line(client.inbuf);
@@ -277,7 +303,9 @@ public:
 				}
 			}
 			if (client.req -> done){
-				requestCallback(client.req);
+                if (!client.req -> response -> sent){
+				    requestCallback(client.req);
+                }
 				client.finish();
 			}
 		}
@@ -330,7 +358,7 @@ void onRequest(Request* req){
 }
 
 int main(){
-	Server serv(8000, onRequest);
+	Server serv(8080, onRequest);
 	while (true){
 		serv.Iterate();
 	}
