@@ -51,10 +51,17 @@ size_t countUntil(std::string str, char thing){
 }
 
 
+bool isCharacterASpace(char c){
+    return (c == '\r') ||
+           (c == '\n') ||
+           (c == ' ');
+}
+
+
 std::string trim(std::string toTrim){
 	bool retEarly = true;
 	for (char c : toTrim){
-		if (!isspace(c)){
+		if (!isCharacterASpace(c)){
 			retEarly = false;
 		}
 	}
@@ -180,16 +187,18 @@ public:
 			}
 			else {
                 size_t nameLen = countUntil(l, ':');
-				std::string name = l.substr(0, nameLen);
-                std::string value = l.substr(nameLen + 1, l.size() - 1);
-                if (value.size() == 0){ // the entire string was the header name - e.g., the count never stopped because it didn't reach a valid :.
+                if (nameLen == l.size()){ // the entire string was the header name - e.g., the count never stopped because it didn't reach a valid :.
                     response -> fail("400 Bad Request");
                     done = true;
+                    return;
                 }
+				std::string name = l.substr(0, nameLen);
+                std::string value = l.substr(nameLen + 1, l.size() - 1);
 				for (size_t i = 0; i < name.size(); i ++){
 					name[i] = std::tolower(name[i]);
 				}
 				Header h = { trim(name), trim(value) };
+                std::cout << "Got header |" << h.name << "| = |" << h.value << "|" << std::endl;
 				if (h.name == "content-length"){
 					contentLength = std::stoi(h.value);
 				}
@@ -205,6 +214,9 @@ public:
 	}
 	
 	void byte(char byte){
+        if (done){
+            return;
+        }
 		body += byte;
 		if (body.size() >= contentLength){
 			done = true;
