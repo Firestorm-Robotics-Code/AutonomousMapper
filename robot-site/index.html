@@ -26,13 +26,27 @@
         
         <script>
             var current = "";
+            var len = 0;
             
+            function updateString() {
+                current = "";
+                for (var x = 0; x < document.getElementById("total-list").childNodes.length; x ++) {
+                    current += document.getElementById("total-list").childNodes[x].textContent.substring(0, document.getElementById("total-list").childNodes[x].textContent.length - 8) + ",";
+                }
+                alert("Current is " + current);
+            }
+
             function removeAll() {
                 document.getElementById("total-list").innerHTML = "";
+                current = "";
+                len = 0;
+                updateString();
             }
 
             function removeItem(item) {
                 document.getElementById("total-list").removeChild(item);
+                //let test = document.getElementById("total-list").childNodes.length
+                updateString();
             }
 
             function addToList(itemId) {
@@ -46,8 +60,9 @@
                 delButton.onclick = () => { removeItem(li) };
 
                 li.appendChild(delButton);
-
-                current = input.value + ",";
+                //alert(document.getElementById("total-list").length)
+                updateString();
+                //alert("Current string is " + current);
             }
 
             function setPresetRamp() {
