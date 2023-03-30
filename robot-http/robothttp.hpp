@@ -266,7 +266,7 @@ public:
 		address.sin_port = htons(port);
 		while (bind(sockfd, (struct sockaddr*)&address, sizeof(struct sockaddr_in)) < 0){
 			perror("Bind failed");
-			std::cout << "Trying again in 10 seconds." << std::endl;
+			std::cout << "Trying again in 10 seconds. Consider rebooting the roborio." << std::endl;
 			for (int x = 10; x > 0; x --){
 				std::cout << x << std::endl;
 				sleep(1);

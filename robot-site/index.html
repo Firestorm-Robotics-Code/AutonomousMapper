@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 
 <html lang="en">
-    <body>
+    <head>
         <meta charset="utf-8">
         <title>Autonomous Mapper</title> 
-    </body>
-    <head>
+    </head>
+    <body>
         <h1>Autonomous Mapper</h1>
         <h2>Presets</h2>
         <button id="preset-place-ramp">Place high and ramp</button>
@@ -16,6 +16,9 @@
         <button id="auto-ramp" value="Auto ramp">Auto ramp</button>
         <button id="taxi-out-short" value="Taxi out short side">Taxi out on short side</button>
         <button id="taxi-out-long" value="Taxi out long side">Taxi out on long side</button>
+        <button id="go-to-short-cube">Go to the cube goal on the short side</button>
+        <button id="go-to-long-cube">Go to the cube goal on the long side</button>
+        <button id="go-to-middle-cube">Go to the cube goal in the middle</button>
         <p></p>
         <button id="reset" value="Clear">Clear all</button>
         <h2>Instructions</h2>
@@ -101,6 +104,9 @@
             document.getElementById("auto-ramp").onclick = () => { addToList("auto-ramp") };
             document.getElementById("taxi-out-short").onclick = () => { addToList("taxi-out-short") };
             document.getElementById("taxi-out-long").onclick = () => { addToList("taxi-out-long") };
+            document.getElementById("go-to-short-cube").onclick = () => { addToList("go-to-short-cube") };
+            document.getElementById("go-to-long-cube").onclick = () => { addToList("go-to-long-cube") };
+            document.getElementById("go-to-middle-cube").onclick = () => { addToList("go-to-middle-cube") };
             document.getElementById("preset-place-ramp").onclick = () => { setPresetRamp() };
             document.getElementById("preset-place-taxi-short").onclick = () => { setPresetPlaceTaxiShort() };
             document.getElementById("preset-place-taxi-long").onclick = () => { setPresetPlaceTaxiLong() };
@@ -109,5 +115,5 @@
 
             document.getElementById("apply").onclick = () => { uploadAll() };
         </script>
-    </head>
+    </body>
 </html>
