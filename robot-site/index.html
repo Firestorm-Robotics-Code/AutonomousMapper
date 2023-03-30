@@ -13,6 +13,8 @@
         <button id="preset-place-taxi-long">Place high and taxi long</button>
         <h2>Options</h2>
         <button id="place-high-cube" value="Place high cube">Place High Cube</button>
+        <button id="place-mid-cube" value="Place Mid Cube"></button>
+        <button id="barf" value="Barf"></button> <!-- in case you want to place a cone -->
         <button id="auto-ramp" value="Auto ramp">Auto ramp</button>
         <button id="taxi-out-short" value="Taxi out short side">Taxi out on short side</button>
         <button id="taxi-out-long" value="Taxi out long side">Taxi out on long side</button>
@@ -101,6 +103,8 @@
             }
 
             document.getElementById("place-high-cube").onclick = () => { addToList("place-high-cube") };
+            document.getElementById("place-mid-cube").onclick = () => { addToList("place-mid-cube") };
+            document.getElementById("barf").onclick = () => { addToList("barf") };
             document.getElementById("auto-ramp").onclick = () => { addToList("auto-ramp") };
             document.getElementById("taxi-out-short").onclick = () => { addToList("taxi-out-short") };
             document.getElementById("taxi-out-long").onclick = () => { addToList("taxi-out-long") };
