@@ -31,7 +31,7 @@
             function updateString() {
                 current = "";
                 for (var x = 0; x < document.getElementById("total-list").childNodes.length; x ++) {
-                    current += document.getElementById("total-list").childNodes[x].textContent.substring(0, document.getElementById("total-list").childNodes[x].textContent.length - 8) + ",";
+                    current += document.getElementById("total-list").childNodes[x]._command + ",";//current += document.getElementById("total-list").childNodes[x].textContent.substring(0, document.getElementById("total-list").childNodes[x].textContent.length - 8) + ",";
                 }
             }
 
@@ -50,6 +50,7 @@
 
             function addToList(itemId) {
                 var li = document.createElement('LI');
+                li._command = itemId;
                 var input = document.getElementById(itemId);
                 li.innerHTML = input.value + "  ";      // give it space between the button
                 document.getElementById("total-list").appendChild(li);
@@ -86,11 +87,16 @@
             }
 
             function uploadAll() {
-                fetch("/api/postRobotCommands", {
-                    method: 'POST',
-                    body: current
-                });
-                alert("Autonomous successfully uploaded!")
+                try {
+                    fetch("/api/postRobotCommands", {
+                        method: 'POST',
+                        body: current
+                    });
+                    alert("Autonomous successfully uploaded!");
+                }
+                catch {
+                    alert("Error uploading autonomous! CALL TYLER OR LUKE OVER, YOU CAN'T FIX THIS YOURSELF AND THE ROBOT COULD BE PERMANENTLY DAMAGED IF YOU DON'T!");
+                }
             }
 
             document.getElementById("place-high-cube").onclick = () => { addToList("place-high-cube") };
@@ -100,7 +106,7 @@
             document.getElementById("preset-place-ramp").onclick = () => { setPresetRamp() };
             document.getElementById("preset-place-taxi-short").onclick = () => { setPresetPlaceTaxiShort() };
             document.getElementById("preset-place-taxi-long").onclick = () => { setPresetPlaceTaxiLong() };
-            var test
+            //var test
             document.getElementById("reset").onclick = () => { removeAll() };
 
             document.getElementById("apply").onclick = () => { uploadAll() };
