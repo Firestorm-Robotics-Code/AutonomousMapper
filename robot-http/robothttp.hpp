@@ -198,7 +198,6 @@ public:
 					name[i] = std::tolower(name[i]);
 				}
 				Header h = { trim(name), trim(value) };
-                std::cout << "Got header |" << h.name << "| = |" << h.value << "|" << std::endl;
 				if (h.name == "content-length"){
 					contentLength = std::stoi(h.value);
 				}
