@@ -138,13 +138,15 @@
             document.getElementById("preset-place-taxi-short").onclick = () => { setPresetPlaceTaxiShort() };
             document.getElementById("preset-place-taxi-long").onclick = () => { setPresetPlaceTaxiLong() };
             document.getElementById("preset-twenty-one").onclick = setPresetTwentyOne;
-            document.getElementById("preset-twenty-one").onclick = () => {
+            document.getElementById("preset-taxi-possess").onclick = () => {
+                removeAll();
                 addToList("go-to-long-cube");
                 addToList("place-high-cube");
                 addToList("go-to-second-cube-pickup");
                 addToList("pickup");
             };
             document.getElementById("preset-go-over-and-pick-up").onclick = () => {
+                removeAll();
                 addToList("place-high-cube");
                 addToList("go-over-ramp");
                 addToList("go-to-middle-pickup");
