@@ -1,8 +1,9 @@
 body {
-    background-size: 10%;
+    /*background-size: 10%;
     background-position: 50%;
     background-image: url(firestorm-image.png);
-    background-repeat: repeat;
+    background-repeat: repeat;*/
+    background-color: #222222;
 }
 
 button {
@@ -13,4 +14,8 @@ h1 {
     color: crimson;
     font-family: monospace;
     font-size: 50px;
-} b
+}
+
+h2 {
+    color: silver;
+}
