@@ -13,6 +13,8 @@
         <button id="preset-place-taxi-short">Place high and taxi short</button>
         <button id="preset-place-taxi-long">Place high and taxi long</button>
         <button id="preset-twenty-one">Twenty-One-Pointer: shoot high, taxi out over ramp, ramp</button>
+        <button id="preset-taxi-possess">Place high and pick up a piece on the long side</button>
+        <button id="preset-go-over-and-pick-up">Place high, go over ramp, pick up, and climb</button>
         <h2>Options</h2>
         <button id="place-high-cube" value="Place high cube">Place High Cube</button>
         <button id="place-mid-cube" value="Place Mid Cube">Place Mid Cube</button>
@@ -26,6 +28,7 @@
         <button id="go-to-middle-cube" value="Go to the cube goal in the middle">Go to the cube goal in the middle</button>
         <button id="flip-one-eighty" value="Flip Orientation by 180 Degrees">Flip Orientation by 180 Degrees</button>
         <button id="go-to-second-cube-pickup" value="Go To Second Cube Pickup Position">Go To Second Cube Pickup Position</button>
+        <button id="go-to-middle-pickup" value="Go To Middle Cube Pickup Position">Go To Middle Cube Pickup Position</button>
         <button id="pickup" value="Pick Up">Pick Up</button>
         <button id="square-up" value="Square Up">Square Up</button>
         <p></p>
@@ -135,6 +138,20 @@
             document.getElementById("preset-place-taxi-short").onclick = () => { setPresetPlaceTaxiShort() };
             document.getElementById("preset-place-taxi-long").onclick = () => { setPresetPlaceTaxiLong() };
             document.getElementById("preset-twenty-one").onclick = setPresetTwentyOne;
+            document.getElementById("preset-twenty-one").onclick = () => {
+                addToList("go-to-long-cube");
+                addToList("place-high-cube");
+                addToList("go-to-second-cube-pickup");
+                addToList("pickup");
+            };
+            document.getElementById("preset-go-over-and-pick-up").onclick = () => {
+                addToList("place-high-cube");
+                addToList("go-over-ramp");
+                addToList("go-to-middle-pickup");
+                addToList("pickup");
+                addToList("flip-one-eighty");
+                addToList("auto-ramp");
+            };
             //var test
             document.getElementById("reset").onclick = () => { removeAll() };
 
