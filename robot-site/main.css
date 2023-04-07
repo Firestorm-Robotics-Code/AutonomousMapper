@@ -10,6 +10,18 @@ button {
     background-color: salmon;
 }
 
+#preset >* {
+    background-color: yellow;
+}
+
+#options >* {
+    background-color: aqua;
+}
+
+#total-list >* {
+    color: rgb(28, 173, 28);
+}
+
 h1 {
     color: crimson;
     font-family: monospace;
