@@ -1,6 +1,7 @@
 body {
     background-image: url(tyler-face.png);
     background-size: 20%;
+    background-blend-mode: color-dodge;
     background-color: #222222;
 }
 
